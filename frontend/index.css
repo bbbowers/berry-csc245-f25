@@ -1,0 +1,42 @@
+p#annoying {
+    color:red;
+    animation-duration: 5s;
+    animation-name: slide-in;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+
+@keyframes slide-in {
+  from {
+    translate: 50vw 0;
+    scale: 100% 1;
+    transform: rotate(180deg);
+  }
+
+  to {
+    translate: 0 0;
+    scale: 100% 1;
+    transform: rotate(0deg);
+  }
+}
+
+#hello {
+    font-size:20pt;
+    display:inline-block;
+}
+
+img {
+    width:300px;
+}
+
+#hide {
+    display: none;
+    font-size:100pt;
+    height:100px;
+    width:auto;
+}
+
+#hello:hover + #hide {
+    display: block;
+}
