@@ -10,10 +10,10 @@ async function main() {
    mongoose.connect("mongodb://localhost/newdb");
 
    app.use(express.json());
-   //app.use(express.static("public"));
+   app.use(express.static("public"));
 
-   //app.set("views", "views");
-   //app.set("view engine", "pug");
+   app.set("views", "views");
+   app.set("view engine", "pug");
    app.use(cors());
 
 
@@ -102,11 +102,23 @@ async function main() {
 
    
    app.get("/", function(req, res) {
-      res.send("<h1>Hello, and welcome to the Hen House!</h1>");
+      res.sendFile("index.html");
    });
 
    app.get("/chicken/:id", async function(req, res) {
-   
+      id = req.params.id;
+      try {
+         chicken = await Chicken.findById(id);
+         if(chicken) {
+            res.render("chicken", chicken);
+         } else {
+            res.status(404).send("Ain't no chicken with id: "+id);
+         }
+      } catch (err) {
+         console.error(err);
+         res.status(500).send("Something went wrong with the server. OOPS!");
+      }
+      
    });
 
    app.get("/chickens/", async function(req, res) {
