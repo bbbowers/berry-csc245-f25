@@ -11,6 +11,9 @@ async function main() {
 
    app.use(express.json());
    //app.use(express.static("public"));
+
+   //app.set("views", "views");
+   //app.set("view engine", "pug");
    app.use(cors());
 
 
