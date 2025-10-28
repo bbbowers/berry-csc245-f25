@@ -10,6 +10,7 @@ async function main() {
    mongoose.connect("mongodb://localhost/newdb");
 
    app.use(express.json());
+   //app.use(express.static("public"));
    app.use(cors());
 
 
@@ -83,10 +84,6 @@ async function main() {
       }
    });
 
-   app.get("/", function(req, res) {
-      res.send("<h1>Hello, and welcome to the Hen House!</h1>");
-   });
-
    app.get("/api/chickens/:filter", async function(req,res) {
       const filter = JSON.parse(req.params.filter);
       console.log(filter);
@@ -101,22 +98,16 @@ async function main() {
    });
 
    
+   app.get("/", function(req, res) {
+      res.send("<h1>Hello, and welcome to the Hen House!</h1>");
+   });
+
    app.get("/chicken/:id", async function(req, res) {
-      id = req.params.id;
-      try {
-         chicken = await Chicken.findById(id);
-         if(chicken) {
-            console.log(chicken);
-            res.send(chicken);
-         } else {
-            res.status(404).send({"error": 404,
-            "msg": "Chicken not found"});
-         }
-      } catch (error) {
-            console.log(error);
-            res.status(404).send({"error": 404,
-            "msg": "Chicken not found"});
-      }
+   
+   });
+
+   app.get("/chickens/", async function(req, res) {
+
    });
 
 
