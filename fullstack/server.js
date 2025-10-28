@@ -21,11 +21,6 @@ async function main() {
 
    const Chicken = mongoose.model("Chicken", chickenSchema);
 
-   chickens = {
-               1:{"name": "Henrietta", "age":"2"},
-               2:{"name": "Alan", "age":"1"},
-            }
-   next_id = 3;
    app.get("/api/chicken/:id", async function(req, res) {
       id = req.params.id;
       try {
@@ -100,19 +95,31 @@ async function main() {
       res.send(chickens);
    });
 
-      app.get("/api/chickens/", async function(req,res) {
+   app.get("/api/chickens/", async function(req,res) {
       chickens = await Chicken.find();
       res.send(chickens);
    });
 
    
-   app.get("/chicken/:pos", function(req, res) {
-      index = req.params.pos;
-      if(index > chickens.length - 1) {
-         res.send("<h1>Chicken Not Found</h1>", 404);
+   app.get("/chicken/:id", async function(req, res) {
+      id = req.params.id;
+      try {
+         chicken = await Chicken.findById(id);
+         if(chicken) {
+            console.log(chicken);
+            res.send(chicken);
+         } else {
+            res.status(404).send({"error": 404,
+            "msg": "Chicken not found"});
+         }
+      } catch (error) {
+            console.log(error);
+            res.status(404).send({"error": 404,
+            "msg": "Chicken not found"});
       }
-      res.send(`<p>Name: ${chickens[index].name}</p><p>Age: ${chickens[index].age}</p>`);
    });
+
+
 
    app.listen(3000, function(){console.log("Listening on port 3000...")})
 }
