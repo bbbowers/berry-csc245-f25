@@ -10,6 +10,7 @@ async function main() {
    mongoose.connect("mongodb://localhost/newdb");
 
    app.use(express.json());
+   app.use(express.urlencoded({ extended: true }));
    app.use(express.static("public"));
 
    app.set("views", "views");
@@ -44,6 +45,7 @@ async function main() {
    });
 
    app.post("/api/chicken", async function(req, res) {
+      console.log(req)
       chicken = await Chicken.create(req.body);
       res.send({"id": chicken['_id'], "chicken":chicken});
    });
@@ -122,7 +124,12 @@ async function main() {
    });
 
    app.get("/chickens/", async function(req, res) {
+      chickens = await Chicken.find();
+      res.render("chickens", chickens);
+   });
 
+   app.get("/hatch/", function(req, res) {
+      res.render("hatch");
    });
 
 
