@@ -103,8 +103,9 @@ async function main() {
    });
 
    
-   app.get("/", function(req, res) {
-      res.sendFile("index.html");
+   app.get("/", async function(req, res) {
+      chickens = await Chicken.find();
+      res.render("index", chickens);
    });
 
    app.get("/chicken/:id", async function(req, res) {
