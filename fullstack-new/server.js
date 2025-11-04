@@ -104,8 +104,8 @@ async function main() {
 
    
    app.get("/", async function(req, res) {
-      chickens = await getChickens();
-      //chickens = [];
+      //chickens = await getChickens();
+      chickens = [];
       res.render("index", chickens);
    });
 
