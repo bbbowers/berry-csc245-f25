@@ -1,0 +1,7 @@
+include header
+include chickenviz
+h1 Welcome to the Hen House! 
+h2 Look at all these chickens: 
+div.chickens 
+    -each chick in chickens 
+        +chicken(chick.name, chick.color)
